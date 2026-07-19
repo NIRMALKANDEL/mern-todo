@@ -1,10 +1,10 @@
 import TodoItem from "./TodoItem";
 
-function TodoList({ todos }) {
+function TodoList({ todos, deleteTodo }) {
   if (todos.length === 0) {
     return (
       <p className="text-center text-gray-500">
-        No todos found.
+        No Todos Found
       </p>
     );
   }
@@ -12,7 +12,11 @@ function TodoList({ todos }) {
   return (
     <div className="space-y-4">
       {todos.map((todo) => (
-        <TodoItem key={todo._id} todo={todo} />
+        <TodoItem
+          key={todo._id}
+          todo={todo}
+          deleteTodo={deleteTodo}
+        />
       ))}
     </div>
   );

@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { getTodos, createTodo } from "../api/todoApi";
+import {
+  getTodos,
+  createTodo,
+  deleteTodo as deleteTodoApi,
+} from "../api/todoApi";
 import TodoList from "../components/TodoList";
 import TodoForm from "../components/TodoForm";
 function Home() {
@@ -22,11 +26,24 @@ const addTodo = async (title) => {
       title,
     });
 
+
+
     fetchTodos();
   } catch (error) {
     console.error(error);
   }
 };
+const deleteTodo = async (id) => {
+  try {
+    await deleteTodoApi(id);
+
+    fetchTodos();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
 return (
   <div className="min-h-screen bg-gray-100 py-10">
     <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-xl p-6">
@@ -36,7 +53,8 @@ return (
       </h1>
       <TodoForm addTodo={addTodo} />
 
-      <TodoList todos={todos} />
+      <TodoList todos={todos} 
+      deleteTodo={deleteTodo}   />
 
     </div>
   </div>
