@@ -1,54 +1,109 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Trash2, Pencil, Check, X } from "lucide-react";
 
 function TodoItem({ todo, deleteTodo, toggleTodo, editTodo }) {
   const [isEditing, setIsEditing] = useState(false);
+
   const [title, setTitle] = useState(todo.title);
+
+  useEffect(() => {
+    setTitle(todo.title);
+  }, [todo.title]);
 
   const handleSave = async () => {
     if (!title.trim()) return;
 
     await editTodo(todo._id, title, todo.completed);
+
     setIsEditing(false);
   };
 
   return (
-    <div className="flex justify-between items-center bg-white rounded-lg shadow p-4 border">
-      {/* Left Side */}
+    <div
+      className="
+      bg-white
+      rounded-xl
+      shadow-md
+      border
+      p-5
+      flex
+      items-center
+      justify-between
+      hover:shadow-lg
+      transition
+    "
+    >
+      {/* LEFT SECTION */}
+
       <div className="flex items-center gap-4 flex-1">
         <input
           type="checkbox"
           checked={todo.completed}
           onChange={() => toggleTodo(todo)}
-          className="w-5 h-5 cursor-pointer"
+          className="
+            w-5
+            h-5
+            cursor-pointer
+          "
         />
 
-        {isEditing ? (
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="border rounded px-3 py-2 flex-1"
-          />
-        ) : (
-          <h2
-            className={`text-lg ${
-              todo.completed ? "line-through text-gray-400" : "text-gray-800"
-            }`}
+        <div className="flex flex-col">
+          {isEditing ? (
+            <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="
+                border
+                rounded-lg
+                px-3
+                py-2
+                outline-none
+              "
+            />
+          ) : (
+            <h2
+              className={`
+                text-lg
+                font-semibold
+                ${
+                  todo.completed
+                    ? "line-through text-gray-400"
+                    : "text-gray-800"
+                }
+              `}
+            >
+              {todo.title}
+            </h2>
+          )}
+
+          <span
+            className={`
+              text-sm
+              mt-1
+              ${todo.completed ? "text-green-600" : "text-yellow-600"}
+            `}
           >
-            {todo.title}
-          </h2>
-        )}
+            {todo.completed ? "Completed" : "Pending"}
+          </span>
+        </div>
       </div>
 
-      {/* Right Side */}
+      {/* ACTION BUTTONS */}
+
       <div className="flex gap-2">
         {isEditing ? (
           <>
             <button
               onClick={handleSave}
-              className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
+              className="
+                bg-green-600
+                text-white
+                p-2
+                rounded-lg
+                hover:bg-green-700
+              "
             >
-              Save
+              <Check size={20} />
             </button>
 
             <button
@@ -56,25 +111,51 @@ function TodoItem({ todo, deleteTodo, toggleTodo, editTodo }) {
                 setTitle(todo.title);
                 setIsEditing(false);
               }}
-              className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded"
+              className="
+                bg-gray-500
+                text-white
+                p-2
+                rounded-lg
+                hover:bg-gray-600
+              "
             >
-              Cancel
+              <X size={20} />
             </button>
           </>
         ) : (
           <>
             <button
               onClick={() => setIsEditing(true)}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+              className="
+                bg-blue-600
+                text-white
+                p-2
+                rounded-lg
+                hover:bg-blue-700
+              "
             >
-              Edit
+              <Pencil size={20} />
             </button>
 
             <button
-              onClick={() => deleteTodo(todo._id)}
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+              onClick={() => {
+                const confirmDelete = window.confirm(
+                  "Are you sure you want to delete this todo?",
+                );
+
+                if (confirmDelete) {
+                  deleteTodo(todo._id);
+                }
+              }}
+              className="
+                bg-red-600
+                text-white
+                p-2
+                rounded-lg
+                hover:bg-red-700
+              "
             >
-              Delete
+              <Trash2 size={20} />
             </button>
           </>
         )}
