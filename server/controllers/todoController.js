@@ -1,0 +1,55 @@
+const Todo = require("../models/Todo");
+
+// Create Todo
+const createTodo = async (req, res) => {
+  try {
+    const { title } = req.body;
+
+    if (!title) {
+      return res.status(400).json({
+        success: false,
+        message: "Title is required",
+      });
+    }
+
+    const todo = await Todo.create({
+      title,
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "Todo created successfully",
+      data: todo,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+
+};
+
+
+// Get All Todos
+const getTodos = async (req, res) => {
+  try {
+    const todos = await Todo.find().sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: todos.length,
+      data: todos,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+module.exports = {
+  createTodo,
+  getTodos,
+};
