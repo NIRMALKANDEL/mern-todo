@@ -1,6 +1,6 @@
 import TodoItem from "./TodoItem";
 
-function TodoList({ todos, deleteTodo, toggleTodo }) {
+function TodoList({ todos, deleteTodo, toggleTodo , editTodo }) {
   if (todos.length === 0) {
     return (
       <p className="text-center text-gray-500">
@@ -17,6 +17,7 @@ function TodoList({ todos, deleteTodo, toggleTodo }) {
           todo={todo}
           deleteTodo={deleteTodo}
           toggleTodo={toggleTodo}
+          editTodo={editTodo}
         />
       ))}
     </div>

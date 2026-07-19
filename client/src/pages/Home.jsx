@@ -56,6 +56,18 @@ const toggleTodo = async (todo) => {
   }
 };
 
+const editTodo = async (id, title, completed) => {
+  try {
+    await updateTodo(id, {
+      title,
+      completed,
+    });
+
+    fetchTodos();
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 return (
   <div className="min-h-screen bg-gray-100 py-10">
@@ -69,7 +81,8 @@ return (
       <TodoList 
       todos={todos} 
       deleteTodo={deleteTodo} 
-      toggleTodo={toggleTodo} />
+      toggleTodo={toggleTodo}
+      editTodo={editTodo} />
 
     </div>
   </div>
