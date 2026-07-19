@@ -13,10 +13,8 @@ function TodoItem({ todo, deleteTodo, toggleTodo, editTodo }) {
 
   return (
     <div className="flex justify-between items-center bg-white rounded-lg shadow p-4 border">
-
       {/* Left Side */}
       <div className="flex items-center gap-4 flex-1">
-
         <input
           type="checkbox"
           checked={todo.completed}
@@ -34,9 +32,7 @@ function TodoItem({ todo, deleteTodo, toggleTodo, editTodo }) {
         ) : (
           <h2
             className={`text-lg ${
-              todo.completed
-                ? "line-through text-gray-400"
-                : "text-gray-800"
+              todo.completed ? "line-through text-gray-400" : "text-gray-800"
             }`}
           >
             {todo.title}
@@ -46,7 +42,6 @@ function TodoItem({ todo, deleteTodo, toggleTodo, editTodo }) {
 
       {/* Right Side */}
       <div className="flex gap-2">
-
         {isEditing ? (
           <>
             <button
@@ -83,7 +78,6 @@ function TodoItem({ todo, deleteTodo, toggleTodo, editTodo }) {
             </button>
           </>
         )}
-
       </div>
     </div>
   );

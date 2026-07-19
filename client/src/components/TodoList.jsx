@@ -1,12 +1,8 @@
 import TodoItem from "./TodoItem";
 
-function TodoList({ todos, deleteTodo, toggleTodo , editTodo }) {
+function TodoList({ todos, deleteTodo, toggleTodo, editTodo }) {
   if (todos.length === 0) {
-    return (
-      <p className="text-center text-gray-500">
-        No Todos Found
-      </p>
-    );
+    return <p className="text-center text-gray-500">No Todos Found</p>;
   }
 
   return (
