@@ -3,6 +3,7 @@ import {
   getTodos,
   createTodo,
   deleteTodo as deleteTodoApi,
+  updateTodo,
 } from "../api/todoApi";
 import TodoList from "../components/TodoList";
 import TodoForm from "../components/TodoForm";
@@ -42,6 +43,18 @@ const deleteTodo = async (id) => {
     console.error(error);
   }
 };
+const toggleTodo = async (todo) => {
+  try {
+    await updateTodo(todo._id, {
+      title: todo.title,
+      completed: !todo.completed,
+    });
+
+    fetchTodos();
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 
 return (
@@ -53,8 +66,10 @@ return (
       </h1>
       <TodoForm addTodo={addTodo} />
 
-      <TodoList todos={todos} 
-      deleteTodo={deleteTodo}   />
+      <TodoList 
+      todos={todos} 
+      deleteTodo={deleteTodo} 
+      toggleTodo={toggleTodo} />
 
     </div>
   </div>

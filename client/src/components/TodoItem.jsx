@@ -1,8 +1,16 @@
-function TodoItem({ todo, deleteTodo }) {
+function TodoItem({ todo, deleteTodo, toggleTodo }) {
   return (
-    <div className="flex justify-between items-center bg-white rounded-lg shadow p-4 border">
+    <div className="flex items-center justify-between bg-white rounded-lg shadow p-4 border">
 
-      <div>
+      <div className="flex items-center gap-4">
+
+        <input
+          type="checkbox"
+          checked={todo.completed}
+          onChange={() => toggleTodo(todo)}
+          className="w-5 h-5 cursor-pointer"
+        />
+
         <h2
           className={`text-lg font-medium ${
             todo.completed
@@ -13,14 +21,11 @@ function TodoItem({ todo, deleteTodo }) {
           {todo.title}
         </h2>
 
-        <p className="text-sm text-gray-500">
-          {todo.completed ? "Completed" : "Pending"}
-        </p>
       </div>
 
       <button
         onClick={() => deleteTodo(todo._id)}
-        className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition"
+        className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
       >
         Delete
       </button>
