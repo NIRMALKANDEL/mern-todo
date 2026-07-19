@@ -1,34 +1,46 @@
 import { useEffect, useState } from "react";
-import API from "../api/api";
-
+import { getTodos, createTodo } from "../api/todoApi";
+import TodoList from "../components/TodoList";
+import TodoForm from "../components/TodoForm";
 function Home() {
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
     fetchTodos();
   }, []);
+const fetchTodos = async () => {
+  try {
+    const response = await getTodos();
+    setTodos(response.data.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+const addTodo = async (title) => {
+  try {
+    await createTodo({
+      title,
+    });
 
-  const fetchTodos = async () => {
-    try {
-      const response = await API.get("/todos");
+    fetchTodos();
+  } catch (error) {
+    console.error(error);
+  }
+};
+return (
+  <div className="min-h-screen bg-gray-100 py-10">
+    <div className="max-w-2xl mx-auto bg-white shadow-lg rounded-xl p-6">
 
-      console.log(response.data);
+      <h1 className="text-4xl font-bold text-center mb-8">
+        📝 MERN Todo
+      </h1>
+      <TodoForm addTodo={addTodo} />
 
-      setTodos(response.data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+      <TodoList todos={todos} />
 
-  return (
-    <div>
-      <h1>Todo App</h1>
-
-      {todos.map((todo) => (
-        <p key={todo._id}>{todo.title}</p>
-      ))}
     </div>
-  );
+  </div>
+);
 }
 
 export default Home;
