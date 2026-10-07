@@ -1,18 +1,3 @@
+node_modules
 .env
-# Dependencies
-client/node_modules
-server/node_modules
-
-# Environment variables
-client/.env
-server/.env
-
-# Logs
 *.log
-
-# Build folders
-client/dist
-
-# OS files
-.DS_Store
-Thumbs.db

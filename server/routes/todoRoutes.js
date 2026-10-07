@@ -2,16 +2,18 @@ const express = require("express");
 const router = express.Router();
 
 const {
+  getTodos,
   createTodo,
-  getTodos, updateTodo,deleteTodo
+  updateTodo,
+  deleteTodo,
+  clearCompleted,
 } = require("../controllers/todoController");
 
-router.post("/", createTodo);
+router.route("/").get(getTodos).post(createTodo);
 
-router.get("/", getTodos);
+// Must be registered before "/:id" so "completed" isn't treated as an id
+router.delete("/completed", clearCompleted);
 
-router.put("/:id", updateTodo);
-
-router.delete("/:id", deleteTodo);
+router.route("/:id").patch(updateTodo).put(updateTodo).delete(deleteTodo);
 
 module.exports = router;
